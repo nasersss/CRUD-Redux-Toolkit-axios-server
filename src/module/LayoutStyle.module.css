@@ -1,0 +1,17 @@
+.header {
+  height: 70px;
+  background-color: rgb(161, 53, 53);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+}
+
+.content-section {
+  margin: 20px 10% 0 10%;
+}
+.active {
+  color: darkred;
+  font-size: large;
+}

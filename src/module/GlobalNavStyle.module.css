@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+a {
+  margin-left: 10px;
+  text-decoration: none;
+  transition: ease-in-out 0.3ms;
+}
+.active {
+  color: darkred;
+  font-size: large;
+  text-decoration: underline;
+}

@@ -1,0 +1,24 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "name": "Nasser Esamil",
+      "email": "nasser@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "Ahmed Ali",
+      "email": "ali18996@gmail.com"
+    },
+    {
+      "id": 3,
+      "name": "Salem Hamed",
+      "email": "hamed15226@gmail.com"
+    },
+    {
+      "name": "erklgfm",
+      "email": "s@gmail.com",
+      "id": 4
+    }
+  ]
+}
