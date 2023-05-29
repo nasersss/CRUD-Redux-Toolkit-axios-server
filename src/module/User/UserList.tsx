@@ -6,11 +6,14 @@ import { ApiStatus, IUser } from "./User.type";
 import { useEffect, useState } from "react";
 import { deleteUserAction, getUserListAction } from "./UserSlice";
 import { Modal } from "../../component/Modal";
+import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
   const [userDataToView, setUserDataToView] = useState<IUser | null>(null);
   const { list, listStatus } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getUserListAction());
@@ -35,7 +38,13 @@ const UserList = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  <input type="button" value="Edit" />
+                  <input
+                    type="button"
+                    value="Edit"
+                    onClick={() => {
+                      navigate(`/edit/${user.id}`);
+                    }}
+                  />
                   <input
                     type="button"
                     value="View"

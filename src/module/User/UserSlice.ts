@@ -1,11 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ApiStatus, IUserForm, IUserState } from "./User.type";
-import { createUserApi, deleteUserApi, getUserListApi } from "./UserService";
+import {
+  ApiStatus,
+  IUpdateUserActionProps,
+  IUserForm,
+  IUserState,
+} from "./User.type";
+import {
+  createUserApi,
+  deleteUserApi,
+  getUserListApi,
+  updateUserApi,
+} from "./UserService";
+import { toastError, toastSuccess } from "../../component/ToastifyConfig";
 
 const initialState: IUserState = {
   list: [],
   listStatus: ApiStatus.ideal,
   createUserFormStatus: ApiStatus.ideal,
+  updateUserFormStatus: ApiStatus.ideal,
 };
 
 export const getUserListAction = createAsyncThunk(
@@ -34,6 +46,13 @@ export const deleteUserAction = createAsyncThunk(
   }
 );
 
+export const updateUserAction = createAsyncThunk(
+  "user/updateUserAction",
+  async ({ id, data }: IUpdateUserActionProps) => {
+    const response = await updateUserApi(id, data);
+    return response.data;
+  }
+);
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -58,13 +77,30 @@ const userSlice = createSlice({
     });
     builder.addCase(createUserAction.fulfilled, (state) => {
       state.createUserFormStatus = ApiStatus.success;
+
+      toastSuccess("User created successfully ");
     });
     builder.addCase(createUserAction.rejected, (state) => {
       state.createUserFormStatus = ApiStatus.error;
+      toastError("Error while create user  ");
     });
+    //delete
     builder.addCase(deleteUserAction.fulfilled, (state, action) => {
       const newList = state.list.filter((x) => x.id !== action.payload);
       state.list = newList;
+      toastSuccess("User deleted successfully ");
+    });
+    // update
+    builder.addCase(updateUserAction.pending, (state) => {
+      state.updateUserFormStatus = ApiStatus.loading;
+    });
+    builder.addCase(updateUserAction.fulfilled, (state) => {
+      state.updateUserFormStatus = ApiStatus.ideal;
+      toastSuccess("User updated successfully ");
+    });
+    builder.addCase(updateUserAction.rejected, (state) => {
+      state.updateUserFormStatus = ApiStatus.error;
+      toastError("Error while update user  ");
     });
   },
 });
